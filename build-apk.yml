@@ -1,1 +1,43 @@
+name: Build VOXMORPH AI Debug APK
 
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Android SDK, NDK, and CMake
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android 35 SDK, NDK, and CMake 3.22.1
+        run: |
+          yes | sdkmanager --licenses || true
+          sdkmanager "platforms;android-35" "build-tools;35.0.0" "ndk;26.3.11579264" "cmake;3.22.1"
+
+      - name: Setup Gradle 8.9
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Build Debug APK
+        run: gradle assembleDebug --stacktrace
+
+      - name: Upload VOXMORPH AI Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: VOXMORPH-AI-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
