@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">VOXMORPH AI</string>
+    <string name="notification_channel_name">Voice Changer Active</string>
+    <string name="notification_channel_desc">Menampilkan status mikrofon aktif saat VOXMORPH AI memproses suara secara real-time.</string>
+</resources>

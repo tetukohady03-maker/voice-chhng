@@ -1,0 +1,4 @@
+-keep class com.voxmorph.ai.audio.NativeAudioBridge { *; }
+-keep class com.voxmorph.ai.data.model.** { *; }
+-keep class ai.onnxruntime.** { *; }
+-dontwarn ai.onnxruntime.**
